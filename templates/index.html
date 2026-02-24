@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TIA Portal V20 Automation</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="background-glob"></div>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="40" height="40" rx="8" fill="url(#paint0_linear)" />
+                    <path d="M20 10V30M10 20H30" stroke="white" stroke-width="4" stroke-linecap="round" />
+                    <defs>
+                        <linearGradient id="paint0_linear" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+                            <stop stop-color="#00C6FF" />
+                            <stop offset="1" stop-color="#0072FF" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <h1>TIA Portal <span class="highlight">Auto</span>Gen</h1>
+            </div>
+            <p class="subtitle">Transform visual logic into Siemens TIA Portal V20 assets instantly.</p>
+        </header>
+
+        <main>
+            <div class="card glass-effect">
+                <div class="input-group">
+                    <label for="api-key">Gemini API Key</label>
+                    {% if api_key_configured %}
+                    <div class="api-key-configured"
+                        style="background: rgba(0, 255, 136, 0.1); padding: 10px; border-radius: 8px; border: 1px solid var(--primary-color); margin-bottom: 10px;">
+                        <span style="color: var(--primary-color); font-weight: 600;">✓ API Key Configured on
+                            Server</span>
+                        <input type="password" id="api-key" placeholder="Using server key" disabled
+                            style="display:none;">
+                    </div>
+                    {% else %}
+                    <input type="password" id="api-key" placeholder="Enter your Google Gemini API Key" required>
+                    <small>Your key is processed locally and never stored.</small>
+                    {% endif %}
+                </div>
+
+                <div class="upload-area" id="drop-zone">
+                    <input type="file" id="file-input" accept="image/*" hidden>
+                    <div class="icon-container">
+                        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" class="upload-icon">
+                            <path d="M12 16L12 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                            <path d="M9 11L12 8 15 11" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M8 16H16" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                    </div>
+                    <h3>Drop your logic diagram here</h3>
+                    <p>or <span class="browse-btn">browse files</span></p>
+                    <p class="file-name" id="file-name"></p>
+                </div>
+
+                <button id="generate-btn" class="primary-btn" disabled>
+                    <span class="btn-text">Generate Assets</span>
+                    <div class="loader" hidden></div>
+                </button>
+            </div>
+
+            <div id="results-section" class="card glass-effect hidden" style="margin-top: 20px;">
+                <div class="results-header">
+                    <div class="status-badge">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20 6L9 17L4 12" />
+                        </svg>
+                        Generated Successfully
+                    </div>
+                    <button id="download-zip-btn" class="secondary-btn">
+                        Download .ZIP Bundle
+                    </button>
+                </div>
+                
+                <div class="code-preview-container">
+                    <div class="code-header">
+                        <h4>SCL Source Selection (Block: <span id="block-name-display">...</span>)</h4>
+                        <button id="copy-scl-btn" class="text-btn">Copy to Clipboard</button>
+                    </div>
+                    <pre id="scl-preview" class="scl-code">
+// SCL code will appear here...
+                    </pre>
+                </div>
+                <p class="import-tip"><b>Tip:</b> If "Generate from source" fails or is empty, use <b>Add New Block (SCL)</b> and paste this code manually.</p>
+            </div>
+        </main>
+
+        <footer>
+            <p>Powered by Google Gemini & TIA Portal V20 Assistant</p>
+        </footer>
+    </div>
+
+    <div id="toast" class="toast hidden">Processing complete! Decoding response...</div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+
+</html>

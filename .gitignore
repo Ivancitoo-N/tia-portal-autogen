@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+.env
+.DS_Store
+uploads/
+debug_block.scl
+*.zip
+*.xlsx
+*.scl
+!services/vision_service.py
+!services/tia_generator.py
