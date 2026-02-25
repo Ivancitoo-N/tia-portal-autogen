@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TIA Portal AutoGen | AI-Powered PLC Asset Generation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #00C6FF;
+            --secondary: #0072FF;
+            --dark: #0F172A;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --text: #F8FAFC;
+            --text-muted: #94A3B8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--dark);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .bg-glow {
+            position: fixed;
+            top: -10%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80vw;
+            height: 80vh;
+            background: radial-gradient(circle, rgba(0, 198, 255, 0.1) 0%, transparent 70%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        nav {
+            padding: 2rem 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-weight: 800;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo span {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero {
+            padding: 6rem 0;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.03em;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            max-width: 700px;
+            margin: 0 auto 2.5rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            box-shadow: 0 10px 30px rgba(0, 114, 255, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 114, 255, 0.5);
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 4rem 0;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(0, 198, 255, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card p {
+            color: var(--text-muted);
+        }
+
+        .steps {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 32px;
+            padding: 4rem;
+            margin: 4rem 0;
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .step {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .step-num {
+            font-size: 2rem;
+            font-weight: 800;
+            opacity: 0.2;
+        }
+
+        footer {
+            padding: 4rem 0;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        code {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: var(--primary);
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero {
+                padding: 4rem 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="bg-glow"></div>
+
+    <div class="container">
+        <nav>
+            <div class="logo">
+                <svg width="32" height="32" viewBox="0 0 40 40" fill="none">
+                    <rect width="40" height="40" rx="8" fill="url(#p-grad)" />
+                    <path d="M20 10V30M10 20H30" stroke="white" stroke-width="4" stroke-linecap="round" />
+                    <defs>
+                        <linearGradient id="p-grad" x1="0" y1="0" x2="40" y2="40">
+                            <stop stop-color="#00C6FF" />
+                            <stop offset="1" stop-color="#0072FF" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+                TIA Portal <span>AutoGen</span>
+            </div>
+            <a href="https://github.com/Ivancitoo-N/tia-portal-autogen" class="btn btn-secondary"
+                style="border: 1px solid var(--text-muted); color: var(--text);">View Repo</a>
+        </nav>
+
+        <section class="hero">
+            <h1>Industrial Automation<br>meets <span>Artificial Intelligence</span></h1>
+            <p>The fastest way to convert images of logic diagrams into error-free Siemens TIA Portal V20 assets.
+                Compatible with S7-1200.</p>
+            <a href="https://github.com/Ivancitoo-N/tia-portal-autogen" class="btn btn-primary">Download Project</a>
+        </section>
+
+        <section class="features">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        <path
+                            d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                    </svg>
+                </div>
+                <h3>AI Vision Analysis</h3>
+                <p>Proprietary multimodal prompts for Google Gemini optimized to recognize Ladder, FBD, and functional
+                    diagrams with high precision.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                    </svg>
+                </div>
+                <h3>IEC 61131-3 SCL</h3>
+                <p>Generates industrial standard Structured Text (SCL). Includes full block headers, variable
+                    declarations, and logic body.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path
+                            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                    </svg>
+                </div>
+                <h3>Tag Synchronization</h3>
+                <p>Generates PLC Tag Excel tables (`.xlsx`) and keeps them 100% synced with the code to avoid
+                    compilation errors.</p>
+            </div>
+        </section>
+
+        <section class="steps">
+            <h2>How to use locally</h2>
+            <div class="steps-grid">
+                <div class="step">
+                    <div class="step-num">01</div>
+                    <p>Clone the repository and install dependencies using <code>pip install -r requirements.txt</code>.
+                    </p>
+                </div>
+                <div class="step">
+                    <div class="step-num">02</div>
+                    <p>Create a <code>.env</code> file with your <code>GEMINI_API_KEY</code> or enter it directly in the
+                        UI.</p>
+                </div>
+                <div class="step">
+                    <div class="step-num">03</div>
+                    <p>Run <code>start.bat</code> to launch the server and go to <code>localhost:5000</code>.</p>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>&copy; 2026 Ivancitoo-N. TIA Portal and S7-1200 are trademarks of Siemens AG.</p>
+        </footer>
+    </div>
+</body>
+
+</html>
